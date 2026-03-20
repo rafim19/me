@@ -1,63 +1,275 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_AUTHOR, SITE_EMAIL } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
-
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
-
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
-
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
-
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<BaseHead title={`About | ${SITE_AUTHOR}`} description="The Architect of Digital Structures - Full-Stack Developer specializing in React, TypeScript, and scalable architecture." />
+	</head>
+	<body>
+		<Navigation />
+		
+		<main class="pt-16">
+			<!-- Hero Section -->
+			<section class="relative py-24 px-8 overflow-hidden">
+				<div class="absolute inset-0 grid-bg opacity-5 pointer-events-none"></div>
+				<div class="max-w-7xl mx-auto relative z-10">
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+						<div>
+							<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-6">
+								About // Identity
+							</div>
+							<h1 class="font-headline text-5xl md:text-6xl font-bold tracking-tighter text-on-background mb-8 leading-tight">
+								THE ARCHITECT<br/>
+								<span class="text-primary">OF DIGITAL</span><br/>
+								STRUCTURES
+							</h1>
+							<p class="text-on-background/60 text-lg leading-relaxed mb-8">
+								I approach full-stack development not as a sequence of code, but as a discipline of structural engineering. From the foundation of the database to the high-fidelity interface, every line is a calculated load-bearing element.
+							</p>
+							<div class="border-l-2 border-primary pl-6">
+								<p class="text-on-background/50 text-sm italic italic uppercase tracking-wider mb-4">
+									"Code is the rebar of the modern world. Precision is non-negotiable."
+								</p>
+								<div class="flex gap-3">
+									<span class="px-3 py-1 border border-secondary/50 text-secondary text-xs font-bold uppercase tracking-widest">
+										Est. 2018
+									</span>
+									<span class="px-3 py-1 border border-secondary/50 text-secondary text-xs font-bold uppercase tracking-widest">
+										Based in Indonesia
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="bg-surface-variant p-8">
+							<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-6">
+								Core Metrics
+							</div>
+							<div class="grid grid-cols-2 gap-6">
+								<div>
+									<div class="font-headline text-4xl font-bold text-on-background mb-1">99.9%</div>
+									<div class="text-on-background/50 text-sm">Uptime Rate</div>
+								</div>
+								<div>
+									<div class="font-headline text-4xl font-bold text-on-background mb-1">50+</div>
+									<div class="text-on-background/50 text-sm">Projects Delivered</div>
+								</div>
+								<div>
+									<div class="font-headline text-4xl font-bold text-on-background mb-1">6+</div>
+									<div class="text-on-background/50 text-sm">Years Experience</div>
+								</div>
+								<div>
+									<div class="font-headline text-4xl font-bold text-on-background mb-1">∞</div>
+									<div class="text-on-background/50 text-sm">Curiosity</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Technical Stack -->
+			<section class="py-20 px-8 bg-surface">
+				<div class="max-w-7xl mx-auto">
+					<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-8">
+						Technical Stack // Modular Units
+					</div>
+					<h2 class="font-headline text-4xl font-bold tracking-tighter text-on-background mb-12 uppercase">
+						Engineered With
+					</h2>
+					
+					<div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-outline/20">
+						<div class="bg-background p-6 hover:bg-primary/5 transition-colors">
+							<div class="text-secondary text-xs font-bold mb-4">01</div>
+							<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">React / Next.js</h3>
+							<p class="text-on-background/50 text-sm">Complex state management & high-fidelity rendering</p>
+						</div>
+						<div class="bg-background p-6 hover:bg-primary/5 transition-colors">
+							<div class="text-secondary text-xs font-bold mb-4">02</div>
+							<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">TypeScript</h3>
+							<p class="text-on-background/50 text-sm">Strict type architecture for mission-critical reliability</p>
+						</div>
+						<div class="bg-background p-6 hover:bg-primary/5 transition-colors">
+							<div class="text-secondary text-xs font-bold mb-4">03</div>
+							<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">Laravel</h3>
+							<p class="text-on-background/50 text-sm">Elegant PHP framework for robust backend systems</p>
+						</div>
+						<div class="bg-background p-6 hover:bg-primary/5 transition-colors">
+							<div class="text-secondary text-xs font-bold mb-4">04</div>
+							<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">Docker</h3>
+							<p class="text-on-background/50 text-sm">Containerized environments for uniform deployment</p>
+						</div>
+						<div class="bg-background p-6 hover:bg-primary/5 transition-colors">
+							<div class="text-secondary text-xs font-bold mb-4">05</div>
+							<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">Vue.js</h3>
+							<p class="text-on-background/50 text-sm">Progressive framework for interactive interfaces</p>
+						</div>
+						<div class="bg-background p-6 hover:bg-primary/5 transition-colors">
+							<div class="text-secondary text-xs font-bold mb-4">06</div>
+							<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">Express</h3>
+							<p class="text-on-background/50 text-sm">Minimalist Node.js framework for RESTful APIs</p>
+						</div>
+						<div class="bg-background p-6 hover:bg-primary/5 transition-colors">
+							<div class="text-secondary text-xs font-bold mb-4">07</div>
+							<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">Linux</h3>
+							<p class="text-on-background/50 text-sm">Server administration and DevOps automation</p>
+						</div>
+						<div class="bg-background p-6 hover:bg-primary/5 transition-colors flex items-center justify-center">
+							<div class="text-center">
+								<div class="text-on-background/30 text-2xl mb-2">+</div>
+								<div class="text-on-background/40 text-xs uppercase tracking-widest">More</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Experience Timeline -->
+			<section class="py-20 px-8">
+				<div class="max-w-7xl mx-auto">
+					<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-8">
+						Experience // Execution Log
+					</div>
+					<h2 class="font-headline text-4xl font-bold tracking-tighter text-on-background mb-12 uppercase">
+						Professional Timeline
+					</h2>
+					
+					<div class="border-l-2 border-primary/30 pl-8 space-y-12">
+						<div class="relative">
+							<div class="absolute -left-[2.6rem] w-4 h-4 bg-secondary"></div>
+							<div class="flex flex-col md:flex-row md:items-start gap-4">
+								<div class="text-secondary font-bold text-sm md:w-32 flex-shrink-0">2022 — Present</div>
+								<div class="flex-1">
+									<h3 class="font-headline text-xl font-bold uppercase tracking-tight text-on-background mb-2">
+										Senior Developer @ Tech Company
+									</h3>
+									<p class="text-on-background/60">
+										Leading full-stack development for enterprise applications. Architecting scalable solutions and mentoring junior developers.
+									</p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="relative">
+							<div class="absolute -left-[2.6rem] w-4 h-4 bg-outline"></div>
+							<div class="flex flex-col md:flex-row md:items-start gap-4">
+								<div class="text-on-background/50 font-bold text-sm md:w-32 flex-shrink-0">2020 — 2022</div>
+								<div class="flex-1">
+									<h3 class="font-headline text-xl font-bold uppercase tracking-tight text-on-background mb-2">
+										Full-Stack Developer @ Startup
+									</h3>
+									<p class="text-on-background/60">
+										Built and maintained multiple web applications. Implemented CI/CD pipelines and improved development workflows.
+									</p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="relative">
+							<div class="absolute -left-[2.6rem] w-4 h-4 bg-outline"></div>
+							<div class="flex flex-col md:flex-row md:items-start gap-4">
+								<div class="text-on-background/50 font-bold text-sm md:w-32 flex-shrink-0">2018 — 2020</div>
+								<div class="flex-1">
+									<h3 class="font-headline text-xl font-bold uppercase tracking-tight text-on-background mb-2">
+										Junior Developer @ Agency
+									</h3>
+									<p class="text-on-background/60">
+										Started my journey in web development. Learned the fundamentals of frontend and backend technologies.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Philosophies -->
+			<section class="py-20 px-8 bg-surface">
+				<div class="max-w-7xl mx-auto">
+					<div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+						<div>
+							<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-4">
+								Philosophies // Logic Gates
+							</div>
+							<h2 class="font-headline text-3xl font-bold tracking-tighter text-on-background mb-6 uppercase">
+								Core Principles
+							</h2>
+							<p class="text-on-background/60">
+								Code is not written for machines. It is written for humans—the ones who will maintain it and the ones who will experience it.
+							</p>
+						</div>
+						
+						<div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div class="border border-outline/30 p-6 hover:border-primary/50 transition-colors">
+								<span class="text-secondary font-bold text-2xl mb-3 block">01</span>
+								<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-                background mb-2">Structural Purity</h3>
+								<p class="text-on-background/60 text-sm">
+									Every component serves a purpose. No excess, no redundancy. Clean architecture that scales.
+								</p>
+							</div>
+							<div class="border border-outline/30 p-6 hover:border-primary/50 transition-colors">
+								<span class="text-secondary font-bold text-2xl mb-3 block">02</span>
+								<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">Security by Design</h3>
+								<p class="text-on-background/60 text-sm">
+									Security isn't an afterthought. It's built into the foundation of every system I create.
+								</p>
+							</div>
+							<div class="border border-outline/30 p-6 hover:border-primary/50 transition-colors">
+								<span class="text-secondary font-bold text-2xl mb-3 block">03</span>
+								<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">Performance First</h3>
+								<p class="text-on-background/60 text-sm">
+									Optimized code isn't a luxury—it's a requirement. Every millisecond matters.
+								</p>
+							</div>
+							<div class="border border-outline/30 p-6 hover:border-primary/50 transition-colors">
+								<span class="text-secondary font-bold text-2xl mb-3 block">04</span>
+								<h3 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background mb-2">User-Centric</h3>
+								<p class="text-on-background/60 text-sm">
+									The best code is invisible. Users experience results, not implementation details.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Contact CTA -->
+			<section id="contact" class="py-24 px-8">
+				<div class="max-w-7xl mx-auto">
+					<div class="border-l-2 border-primary pl-8 py-8">
+						<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-4">
+							Contact // Transmission
+						</div>
+						<h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-on-background mb-6 uppercase">
+							Let's Build<br/>
+							<span class="text-primary">Together</span>
+						</h2>
+						<p class="text-on-background/60 mb-8 max-w-xl">
+							Have a project in mind? I'm always open to discussing new opportunities and ambitious ideas.
+						</p>
+						<div class="flex flex-col sm:flex-row gap-4">
+							<a
+								href={`mailto:${SITE_EMAIL}`}
+								class="bg-primary text-background px-8 py-4 font-bold uppercase tracking-widest text-sm hover:opacity-90 transition-all text-center"
+							>
+								Send a Message
+							</a>
+							<a
+								href={`mailto:${SITE_EMAIL}`}
+								class="border border-outline px-8 py-4 text-on-background font-bold uppercase tracking-widest text-sm hover:bg-on-background/5 transition-all text-center"
+							>
+								{SITE_EMAIL}
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,44 @@
+---
+import { SITE_EMAIL } from '../consts';
+
+interface Props {
+	variant?: 'primary' | 'secondary';
+	class?: string;
+}
+
+const { variant = 'primary', class: className } = Astro.props;
+---
+
+<button
+	id="copy-email-btn"
+	data-email={SITE_EMAIL}
+	class:list={[
+		'font-headline font-bold uppercase tracking-widest text-sm transition-all active:scale-95',
+		variant === 'primary'
+			? 'bg-on-background text-background px-12 py-6 hover:bg-primary hover:text-white'
+			: 'border border-outline px-12 py-6 text-on-background hover:bg-on-background/5',
+		className
+	]}
+>
+	Copy Email
+</button>
+
+<script>
+	const copyBtn = document.getElementById('copy-email-btn');
+	
+	copyBtn?.addEventListener('click', async () => {
+		const email = copyBtn.getAttribute('data-email');
+		if (email) {
+			try {
+				await navigator.clipboard.writeText(email);
+				const originalText = copyBtn.textContent;
+				copyBtn.textContent = 'Copied!';
+				setTimeout(() => {
+					copyBtn.textContent = originalText;
+				}, 2000);
+			} catch (err) {
+				console.error('Failed to copy email:', err);
+			}
+		}
+	});
+</script>

@@ -6,9 +6,27 @@ import { defineConfig } from 'astro/config';
 
 import cloudflare from '@astrojs/cloudflare';
 
+import tailwindcss from '@tailwindcss/vite';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
-  integrations: [mdx(), sitemap()],
+  site: 'https://rafimuhammad.dev',
+
+  integrations: [
+    mdx(),
+    sitemap(),
+  ],
+
   adapter: cloudflare(),
+
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+      wrap: true,
+    },
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

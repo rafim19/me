@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+	title: string;
+	description: string;
+	heroImage?: ImageMetadata;
+	techStack: string[];
+	href: string;
+	featured?: boolean;
+}
+
+const { title, description, heroImage, techStack, href, featured = false } = Astro.props;
+---
+
+<a
+	href={href}
+	class="group flex flex-col bg-surface kinetic-border transition-all duration-300 hover:border-primary/50"
+>
+	<div class={`overflow-hidden bg-surface-variant ${featured ? 'aspect-[16/9]' : 'aspect-video'}`}>
+		{heroImage && (
+			<Image
+				src={heroImage}
+				alt={title}
+				class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+			/>
+		)}
+	</div>
+	
+	<div class="p-8 flex flex-col h-full">
+		<h3 class="font-headline text-2xl font-bold text-on-surface mb-3 tracking-tighter uppercase">
+			{title}
+		</h3>
+		<p class="text-on-surface-variant text-sm mb-6 leading-relaxed font-light">
+			{description}
+		</p>
+		
+		<div class="flex flex-wrap gap-2 mb-8">
+			{techStack.map((tech) => (
+				<span class="px-2 py-0.5 border border-outline/50 text-on-surface-variant text-[10px] uppercase tracking-widest font-bold">
+					{tech}
+				</span>
+			))}
+		</div>
+		
+		<div class="mt-auto">
+			<span class="inline-flex items-center text-primary text-xs font-bold uppercase tracking-widest group/link">
+				View Case Study
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+				</svg>
+			</span>
+		</div>
+	</div>
+</a>

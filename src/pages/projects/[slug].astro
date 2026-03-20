@@ -1,0 +1,176 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseHead from '../../components/BaseHead.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_AUTHOR } from '../../consts';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project },
+	}));
+}
+
+const { project } = Astro.props;
+const allProjects = (await getCollection('projects'))
+	.sort((a, b) => a.data.order - b.data.order);
+const currentIndex = allProjects.findIndex((p) => p.id === project.id);
+const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<BaseHead title={`${project.data.title} | ${SITE_AUTHOR}`} description={project.data.subtitle} />
+	</head>
+	<body>
+		<Navigation />
+		
+		<main class="pt-16">
+			<!-- Hero Section -->
+			<section class="relative overflow-hidden pt-24 pb-20 px-8">
+				<div class="absolute inset-0 grid-bg opacity-5 pointer-events-none"></div>
+				<div class="max-w-7xl mx-auto relative z-10">
+					<div class="flex items-center gap-4 mb-8">
+						<span class="text-secondary text-xs font-bold uppercase tracking-widest border border-secondary/50 px-4 py-2">
+							Case Study {String(currentIndex + 1).padStart(2, '0')}
+						</span>
+					</div>
+					
+					<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+						<div class="lg:col-span-7">
+							<h1 class="font-headline text-5xl md:text-6xl lg:text-7xl font-bold text-on-background tracking-tighter mb-8 leading-tight uppercase">
+								{project.data.title}
+							</h1>
+							<p class="text-xl text-on-background/60 leading-relaxed max-w-xl">
+								{project.data.subtitle}
+							</p>
+						</div>
+						<div class="lg:col-span-5">
+							{project.data.heroImage && (
+								<div class="bg-surface-variant">
+									<Image
+										src={project.data.heroImage}
+										alt={project.data.title}
+										class="w-full h-auto grayscale hover:grayscale-0 transition-all duration-500"
+									/>
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Overview Section -->
+			<section class="border-y border-outline/20">
+				<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3">
+					<div class="p-8 md:p-12 border-b md:border-b-0 md:border-r border-outline/20 hover:bg-surface transition-colors">
+						<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-6">The Problem</div>
+						<p class="text-on-background/70 leading-relaxed">
+							{project.data.problem}
+						</p>
+					</div>
+					<div class="p-8 md:p-12 border-b md:border-b-0 md:border-r border-outline/20 hover:bg-surface transition-colors">
+						<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-6">The Solution</div>
+						<p class="text-on-background/70 leading-relaxed">
+							{project.data.solution}
+						</p>
+					</div>
+					<div class="p-8 md:p-12 hover:bg-surface transition-colors">
+						<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-6">My Role</div>
+						<p class="text-on-background/70 leading-relaxed">
+							{project.data.role}
+						</p>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Tech Stack Section -->
+			<section class="py-20 px-8 bg-surface">
+				<div class="max-w-7xl mx-auto">
+					<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-12 text-center">Engineered With</div>
+					<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-outline/20">
+						{project.data.techStack.map((tech) => (
+							<div class="bg-background p-6 flex items-center justify-center hover:bg-primary/5 transition-colors">
+								<span class="text-on-background text-xs font-bold uppercase tracking-widest">{tech}</span>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+			
+			<!-- Outcomes Section -->
+			<section class="py-20 px-8">
+				<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+					<div>
+						<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-8">Key Achievements</div>
+						<div class="border-l-2 border-primary/30 pl-8">
+							{project.data.achievements.map((achievement, index) => (
+								<div class="mb-8 last:mb-0">
+									<div class="flex items-center gap-4 mb-2">
+										<span class="text-secondary font-bold text-sm">{String(index + 1).padStart(2, '0')}</span>
+										<h4 class="font-headline text-lg font-bold uppercase tracking-tight text-on-background">
+											{achievement.title}
+										</h4>
+									</div>
+									<p class="text-on-background/60 text-sm leading-relaxed">
+										{achievement.description}
+									</p>
+								</div>
+							))}
+						</div>
+					</div>
+					
+					<div class="space-y-4">
+						{project.data.heroImage && (
+							<div class="bg-surface-variant">
+								<Image
+									src={project.data.heroImage}
+									alt={`${project.data.title} preview`}
+									class="w-full h-64 object-cover"
+								/>
+							</div>
+						)}
+						{project.data.heroImage && (
+							<div class="bg-surface-variant">
+								<Image
+									src={project.data.heroImage}
+									alt={`${project.data.title} detail`}
+									class="w-full h-48 object-cover"
+								/>
+							</div>
+						)}
+					</div>
+				</div>
+			</section>
+			
+			<!-- Next Project Navigation -->
+			<section class="py-24 px-8 bg-surface">
+				<div class="max-w-7xl mx-auto text-center">
+					<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-8">Next Project</div>
+					<a href={`/projects/${nextProject.id}`} class="group inline-block">
+						<h2 class="font-headline text-4xl md:text-6xl font-bold text-on-background mb-4 group-hover:text-primary transition-colors tracking-tighter uppercase">
+							{nextProject.data.title}
+						</h2>
+						<div class="flex items-center justify-center gap-2 text-on-background/60 group-hover:text-primary transition-colors">
+							<span class="text-sm uppercase tracking-widest">View Case Study</span>
+							<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+							</svg>
+						</div>
+					</a>
+					<div class="mt-12">
+						<a href="/projects" class="border border-outline px-8 py-4 text-on-background font-bold uppercase tracking-widest text-sm hover:bg-on-background/5 transition-all inline-block">
+							Back to Projects
+						</a>
+					</div>
+				</div>
+			</section>
+		</main>
+		
+		<Footer />
+	</body>
+</html>

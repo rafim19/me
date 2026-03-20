@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseHead from '../../components/BaseHead.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_AUTHOR } from '../../consts';
+
+const projects = (await getCollection('projects'))
+	.sort((a, b) => a.data.order - b.data.order);
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<BaseHead title={`Projects | ${SITE_AUTHOR}`} description="A collection of projects I've built, from side projects to production apps." />
+	</head>
+	<body>
+		<Navigation />
+		
+		<main class="relative pt-32 pb-24 px-8 max-w-7xl mx-auto">
+			<!-- Grid Background Overlay -->
+			<div class="absolute inset-0 grid-bg opacity-10 pointer-events-none -z-10"></div>
+			
+			<header class="mb-20 border-l-2 border-primary pl-8">
+				<div class="flex flex-col gap-2">
+					<h1 class="font-headline text-6xl md:text-8xl font-black tracking-tighter text-on-surface leading-none uppercase">
+						Projects
+					</h1>
+					<p class="text-on-surface-variant text-lg md:text-xl max-w-2xl font-light leading-relaxed uppercase tracking-wider">
+						A collection of things I've built, from side projects to production apps. Focused on precision, scalability, and user-centric design.
+					</p>
+				</div>
+			</header>
+			
+			<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-t border-l border-outline/20">
+				{projects.map((project, index) => (
+					<a
+						href={`/projects/${project.id}`}
+						class="group flex flex-col bg-surface border-r border-b border-outline/20 transition-all duration-300"
+					>
+						<div class="relative aspect-video bg-surface-variant overflow-hidden">
+							<span class="absolute top-4 right-4 text-secondary text-xs font-bold z-10">0{index + 1}</span>
+							{project.data.heroImage && (
+								<Image
+									src={project.data.heroImage}
+									alt={project.data.title}
+									class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+								/>
+							)}
+						</div>
+						<div class="p-6 flex flex-col h-full">
+							<div class="flex flex-wrap gap-2 mb-3">
+								{project.data.techStack.slice(0, 3).map((tech) => (
+									<span class="text-xs uppercase tracking-widest font-bold text-on-background/60 border border-outline/30 px-2 py-0.5">
+										{tech}
+									</span>
+								))}
+							</div>
+							<h3 class="font-headline text-xl font-bold text-on-background mb-2 tracking-tight uppercase">
+								{project.data.title}
+							</h3>
+							<p class="text-on-background/60 text-sm mb-6 leading-relaxed flex-grow">
+								{project.data.subtitle}
+							</p>
+							<div>
+								<span class="inline-flex items-center text-primary text-xs font-bold uppercase tracking-widest group/link">
+									View Case Study
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+									</svg>
+								</span>
+							</div>
+						</div>
+					</a>
+				))}
+			</section>
+			
+			<div class="mt-24 py-16 bg-surface-variant border border-outline/30 px-12 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+				<div class="absolute top-0 right-0 w-32 h-1 bg-primary"></div>
+				<div class="max-w-xl text-center md:text-left z-10">
+					<h2 class="font-headline text-4xl font-black text-on-surface mb-2 tracking-tighter uppercase">Have a project in mind?</h2>
+					<p class="text-on-surface-variant text-lg font-light tracking-wide">I'm always open to discussing new opportunities and ambitious projects.</p>
+				</div>
+				<a href="/about#contact" class="bg-primary text-background px-10 py-5 font-black uppercase tracking-[0.2em] text-sm hover:translate-y-[-2px] transition-all active:scale-95 z-10">
+					Get In Touch
+				</a>
+			</div>
+		</main>
+		
+		<Footer />
+	</body>
+</html>

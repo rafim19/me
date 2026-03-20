@@ -1,114 +1,119 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
+import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { SITE_AUTHOR } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
+		<BaseHead title={`Writings | ${SITE_AUTHOR}`} description="Thoughts on full-stack architecture, design systems, and the intersection of code and creativity." />
 	</head>
 	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
+		<Navigation />
+		
+		<main class="pt-24 pb-20 px-8">
+			<div class="max-w-7xl mx-auto">
+				<!-- Header -->
+				<section class="mb-16 border-l-2 border-primary pl-8">
+					<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-4">Writings</div>
+					<h1 class="font-headline text-5xl md:text-6xl font-bold tracking-tighter text-on-background mb-4 uppercase">
+						Thoughts & Ideas
+					</h1>
+					<p class="text-on-background/60 text-lg max-w-xl">
+						Explorations in full-stack architecture, design systems, and the intersection of code and creativity.
+					</p>
+				</section>
+				
+				<!-- Filter Tags -->
+				<section class="mb-12 flex flex-wrap gap-3">
+					<button data-filter="all" class="filter-btn px-5 py-2 bg-primary text-background text-xs font-bold uppercase tracking-widest transition-all">
+						All
+					</button>
+					<button data-filter="Development" class="filter-btn px-5 py-2 border border-outline/50 text-on-background/60 text-xs font-bold uppercase tracking-widest hover:border-primary/60 hover:text-primary transition-all">
+						Development
+					</button>
+					<button data-filter="Design" class="filter-btn px-5 py-2 border border-outline/50 text-on-background/60 text-xs font-bold uppercase tracking-widest hover:border-primary/60 hover:text-primary transition-all">
+						Design
+					</button>
+					<button data-filter="Life" class="filter-btn px-5 py-2 border border-outline/50 text-on-background/60 text-xs font-bold uppercase tracking-widest hover:border-primary/60 hover:text-primary transition-all">
+						Life
+					</button>
+				</section>
+				
+				<!-- Blog Feed -->
+				<div id="blog-feed" class="border-t border-outline/20">
+					{posts.map((post, index) => (
+						<article 
+							data-category={post.data.category || 'Development'} 
+							class="group py-8 border-b border-outline/20 hover:bg-surface/50 transition-colors"
+						>
+							<a href={`/blog/${post.id}/`} class="block">
+								<div class="flex flex-col md:flex-row md:items-start gap-4">
+									<div class="flex-1">
+										<div class="flex items-center gap-3 mb-3">
+											<span class="text-secondary text-xs font-bold uppercase tracking-widest">
+												{post.data.category || 'Development'}
+											</span>
+											<span class="text-on-background/30">—</span>
+											<time class="text-on-background/40 text-xs uppercase tracking-wider" datetime={post.data.pubDate.toISOString()}>
+												<FormattedDate date={post.data.pubDate} />
+											</time>
+										</div>
+										<h2 class="font-headline text-2xl md:text-3xl font-bold text-on-background group-hover:text-primary transition-colors tracking-tight mb-3">
+											{post.data.title}
+										</h2>
+										<p class="text-on-background/60 leading-relaxed max-w-2xl">
+											{post.data.description}
+										</p>
+									</div>
+									<div class="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest group-hover:gap-3 transition-all">
+										<span>Read</span>
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+										</svg>
+									</div>
+								</div>
+							</a>
+						</article>
+					))}
+				</div>
+			</div>
 		</main>
+		
 		<Footer />
 	</body>
 </html>
+
+<script>
+	const filterBtns = document.querySelectorAll('.filter-btn');
+	const articles = document.querySelectorAll('article[data-category]');
+	
+	filterBtns.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const filter = btn.getAttribute('data-filter');
+			
+			filterBtns.forEach((b) => {
+				b.classList.remove('bg-primary', 'text-background');
+				b.classList.add('border', 'border-outline/50', 'text-on-background/60');
+			});
+			btn.classList.add('bg-primary', 'text-background');
+			btn.classList.remove('border', 'border-outline/50', 'text-on-background/60');
+			
+			articles.forEach((article) => {
+				const category = article.getAttribute('data-category');
+				if (filter === 'all' || category === filter) {
+					(article as HTMLElement).style.display = 'block';
+				} else {
+					(article as HTMLElement).style.display = 'none';
+				}
+			});
+		});
+	});
+</script>

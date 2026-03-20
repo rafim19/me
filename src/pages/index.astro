@@ -1,49 +1,195 @@
 ---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
+import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_AUTHOR, SITE_EMAIL } from '../consts';
+
+const projects = (await getCollection('projects'))
+	.filter((p) => p.data.featured)
+	.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`${SITE_AUTHOR} | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<Navigation />
+		<main class="pt-16">
+			<!-- Hero Section -->
+			<section class="relative px-8 pt-32 pb-40 md:pt-48 md:pb-64 overflow-hidden border-b border-outline/20">
+				<div class="max-w-7xl mx-auto">
+					<div class="w-full md:w-3/4 relative z-10">
+						<div class="inline-block py-1 px-3 border border-primary/30 bg-primary/5 text-primary text-xs font-bold uppercase tracking-widest mb-8">
+							Available for Projects
+						</div>
+						
+						<h1 class="font-headline text-5xl md:text-6xl font-bold tracking-tighter text-on-background leading-tight mb-12">
+							HI, I'M <span class="text-primary text-glow">{SITE_AUTHOR.toUpperCase()}</span>,<br/>
+              AN USER-CENTRIC FULL-STACK DEVELOPER, HELPING CLIENTS BUILDS SOLUTION <span class="italic font-light opacity-60">FOR THEIR USER</span>.
+						</h1>
+						
+						<div class="flex flex-wrap gap-8 items-center border-t border-outline/20 pt-12">
+							<div class="text-xs font-bold uppercase tracking-widest text-on-background/40">Tooling Stack</div>
+							<div class="flex flex-wrap gap-4">
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background">React</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background/40">/</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background">TypeScript</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background/40">/</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background">Laravel</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background/40">/</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background">Docker</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background/40">/</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background">Vue</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background/40">/</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background">Express</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background/40">/</span>
+								<span class="text-xs font-medium uppercase tracking-tighter text-on-background">Linux</span>
+							</div>
+						</div>
+						
+						<div class="mt-16 flex flex-wrap gap-6">
+							<a href="/projects" class="bg-primary text-background px-10 py-5 font-bold uppercase tracking-widest text-sm transition-all hover:opacity-90">
+								View Case Studies
+							</a>
+							<a href="/about" class="border border-outline px-10 py-5 text-on-background font-bold uppercase tracking-widest text-sm transition-all hover:bg-on-background/5">
+								About Me
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Featured Projects Section -->
+			<section class="py-32 px-8 bg-background">
+				<div class="max-w-7xl mx-auto">
+					<div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+						<div class="max-w-2xl">
+							<div class="text-secondary text-xs font-bold uppercase tracking-widest mb-4">Selected Works</div>
+							<h2 class="font-headline text-4xl md:text-6xl font-bold tracking-tighter text-on-background">CRAFTED SOLUTIONS</h2>
+						</div>
+						<a href="/projects" class="group text-on-background/60 hover:text-primary font-bold uppercase tracking-widest text-xs flex items-center gap-4 transition-colors">
+							See Library
+							<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+							</svg>
+						</a>
+					</div>
+					
+					<div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+						{projects.slice(0, 1).map((project) => (
+							<div class="group md:col-span-8">
+								<a href={`/projects/${project.id}`} class="block">
+									<div class="relative overflow-hidden bg-surface border border-outline/20">
+										{project.data.heroImage && (
+											<Image
+												src={project.data.heroImage}
+												alt={project.data.title}
+												class="w-full h-96 object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+											/>
+										)}
+									</div>
+								</a>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+			
+			<!-- Technical Philosophy Section -->
+			<section class="py-40 px-8 border-y border-outline/20">
+				<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+					<div>
+						<h2 class="font-headline text-4xl font-bold mb-10 text-on-background tracking-tighter uppercase">
+							INTEGRITY & INTENTION
+						</h2>
+						<p class="text-lg text-on-background/60 mb-12 leading-relaxed">
+							Great software isn't just about clean code—it's about the emotional resonance of the user experience.
+						</p>
+						
+						<div class="space-y-8">
+							<div class="flex items-start gap-6 group">
+								<span class="text-primary font-bold text-xs mt-1.5 opacity-40 group-hover:opacity-100 transition-opacity">01</span>
+								<div>
+									<span class="text-xl font-bold uppercase tracking-tight block mb-1">ACCESSIBILITY-FIRST</span>
+									<span class="text-sm text-on-background/40">Ensuring digital equity through semantic structure and inclusive design.</span>
+								</div>
+							</div>
+							<div class="flex items-start gap-6 group">
+								<span class="text-primary font-bold text-xs mt-1.5 opacity-40 group-hover:opacity-100 transition-opacity">02</span>
+								<div>
+									<span class="text-xl font-bold uppercase tracking-tight block mb-1">SCALABLE ARCHITECTURE</span>
+									<span class="text-sm text-on-background/40">Building systems that grow with your user base without technical debt.</span>
+								</div>
+							</div>
+							<div class="flex items-start gap-6 group">
+								<span class="text-primary font-bold text-xs mt-1.5 opacity-40 group-hover:opacity-100 transition-opacity">03</span>
+								<div>
+									<span class="text-xl font-bold uppercase tracking-tight block mb-1">RAPID ITERATION</span>
+									<span class="text-sm text-on-background/40">From prototype to production with precision and calculated velocity.</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="bg-surface border border-outline/30 p-1 relative shadow-2xl">
+						<div class="bg-background h-10 flex items-center justify-between px-4 border-b border-outline/30">
+							<div class="flex gap-2">
+								<div class="w-2 h-2 rounded-full bg-secondary"></div>
+								<div class="w-2 h-2 rounded-full bg-primary"></div>
+								<div class="w-2 h-2 rounded-full bg-outline"></div>
+							</div>
+							<div class="text-xs font-bold uppercase tracking-widest text-on-background/20">architect.config.ts</div>
+						</div>
+						<div class="p-10 font-mono text-sm leading-relaxed overflow-x-auto">
+							<p class="text-primary">const FullStackDev = &#123;</p>
+							<p class="pl-4">name: <span class="text-secondary">'Rafi Muhammad'</span>,</p>
+							<p class="pl-4">philosophy: <span class="text-secondary">'Cyber-Minimalism'</span>,</p>
+							<p class="pl-4">stack: [<span class="text-secondary">'React'</span>, <span class="text-secondary">'TypeScript'</span>, <span class="text-secondary">'Laravel'</span>],</p>
+							<p class="pl-4">render: () =&#62; &#123;</p>
+							<p class="pl-8"><span class="text-primary">return</span> System.apply&#40;&#123;</p>
+							<p class="pl-12">minimalism: <span class="text-primary">true</span>,</p>
+							<p class="pl-12">performance: <span class="text-primary">100</span>,</p>
+							<p class="pl-12">scalability: <span class="text-primary">Infinity</span></p>
+							<p class="pl-8">&#125;&#41;;</p>
+							<p class="pl-4">&#125;</p>
+							<p>&#125;;</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- CTA Section -->
+			<section class="py-40 px-8">
+				<div class="max-w-7xl mx-auto bg-surface border border-outline/20 p-16 md:p-24 text-center relative overflow-hidden">
+					<div class="absolute inset-0 bg-primary/5 opacity-40 pointer-events-none"></div>
+					<h2 class="font-headline text-5xl md:text-8xl font-bold mb-8 tracking-tighter uppercase relative z-10 leading-tight">
+						READY TO BUILD<br/>SOMETHING <span class="text-primary text-glow">ICONIC?</span>
+					</h2>
+					<p class="text-lg opacity-60 mb-16 max-w-2xl mx-auto relative z-10">
+						Currently accepting new projects. Let's discuss your vision and how we can bring it to life through code.
+					</p>
+					<div class="flex flex-col md:flex-row justify-center gap-8 relative z-10">
+						<a
+							href={`mailto:${SITE_EMAIL}`}
+							class="bg-on-background text-background px-12 py-6 font-bold uppercase tracking-widest text-sm hover:bg-primary hover:text-white transition-all active:scale-95"
+						>
+							Send a Message
+						</a>
+						<a
+							href={`mailto:${SITE_EMAIL}`}
+							class="border border-outline px-12 py-6 text-on-background font-bold uppercase tracking-widest text-sm hover:bg-on-background/5 transition-all active:scale-95"
+						>
+							Copy Email
+						</a>
+					</div>
+				</div>
+			</section>
 		</main>
+		
 		<Footer />
 	</body>
 </html>

@@ -1,0 +1,122 @@
+---
+import { NAV_LINKS, SITE_TITLE, SITE_EMAIL } from '../consts';
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="fixed top-0 w-full z-50 glass-nav">
+	<div class="flex justify-between items-center pr-8 h-16 w-full max-w-7xl mx-auto">
+		<a href="/" class="text-primary font-headline text-xl font-bold tracking-tighter uppercase leading-tight">
+			{SITE_TITLE}
+		</a>
+		
+		<div class="hidden md:flex items-center gap-10">
+			{NAV_LINKS.map((link) => (
+				<a
+					href={link.href}
+					class:list={[
+						'font-headline tracking-tighter uppercase text-sm transition-colors duration-200',
+						(currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)))
+							? 'text-primary border-b border-primary pb-1'
+							: 'text-on-background hover:text-primary'
+					]}
+				>
+					{link.label}
+				</a>
+			))}
+		</div>
+		
+		<div class="flex items-center gap-3">
+			<!-- Theme Toggle -->
+			<button
+				id="theme-toggle"
+				class="p-2 text-on-background hover:text-primary transition-colors"
+				aria-label="Toggle theme"
+			>
+				<!-- Sun icon (shown in dark mode) -->
+				<svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+				</svg>
+				<!-- Moon icon (shown in light mode) -->
+				<svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+				</svg>
+			</button>
+			
+			<a
+				href={`mailto:${SITE_EMAIL}`}
+				class="hidden md:block bg-primary text-background px-5 py-2 text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all active:scale-90"
+			>
+				Contact Me
+			</a>
+			
+			<button
+				id="mobile-menu-btn"
+				class="md:hidden text-on-background p-2"
+				aria-label="Toggle menu"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+				</svg>
+			</button>
+		</div>
+	</div>
+	
+	<!-- Mobile Menu -->
+	<div id="mobile-menu" class="hidden md:hidden bg-background/95 backdrop-blur-xl border-t border-outline/20">
+		<div class="flex flex-col gap-4 px-8 py-6">
+			{NAV_LINKS.map((link) => (
+				<a
+					href={link.href}
+					class:list={[
+						'font-headline tracking-tighter uppercase text-sm transition-colors',
+						currentPath === link.href
+							? 'text-primary'
+							: 'text-on-background hover:text-primary'
+					]}
+				>
+					{link.label}
+				</a>
+			))}
+			<a
+				href={`mailto:${SITE_EMAIL}`}
+				class="bg-primary text-background px-5 py-3 text-xs font-bold uppercase tracking-widest text-center hover:opacity-90 transition-all"
+			>
+				Contact Me
+			</a>
+		</div>
+	</div>
+</nav>
+
+<script>
+	const themeToggle = document.getElementById('theme-toggle');
+	const sunIcon = document.getElementById('sun-icon');
+	const moonIcon = document.getElementById('moon-icon');
+	
+	function updateIcons(isDark: boolean) {
+		if (isDark) {
+			sunIcon?.classList.remove('hidden');
+			moonIcon?.classList.add('hidden');
+		} else {
+			sunIcon?.classList.add('hidden');
+			moonIcon?.classList.remove('hidden');
+		}
+	}
+	
+	// Initialize icons based on current theme
+	const isDark = document.documentElement.classList.contains('dark');
+	updateIcons(isDark);
+	
+	themeToggle?.addEventListener('click', () => {
+		const isCurrentlyDark = document.documentElement.classList.toggle('dark');
+		localStorage.setItem('theme', isCurrentlyDark ? 'dark' : 'light');
+		updateIcons(isCurrentlyDark);
+	});
+	
+	const menuBtn = document.getElementById('mobile-menu-btn');
+	const mobileMenu = document.getElementById('mobile-menu');
+	
+	menuBtn?.addEventListener('click', () => {
+		mobileMenu?.classList.toggle('hidden');
+	});
+</script>
