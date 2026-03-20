@@ -1,0 +1,9 @@
+name = "rafimuhammad-dev"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "./dist"
+
+# Account ID is set via GitHub Secrets - don't hardcode here
+# The wrangler-action will inject CLOUDFLARE_ACCOUNT_ID automatically
+
+[vars]
+SITE_URL = "https://rafimuhammad.dev"
