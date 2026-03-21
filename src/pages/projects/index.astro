@@ -1,13 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
-import BaseHead from '../../components/BaseHead.astro';
-import Navigation from '../../components/Navigation.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_AUTHOR } from '../../consts';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Navigation from "../../components/Navigation.astro";
+import { SITE_AUTHOR, SITE_TITLE } from "../../consts";
 
-const projects = (await getCollection('projects'))
-	.sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection("projects")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
 ---
 
 <!doctype html>
